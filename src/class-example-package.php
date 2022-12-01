@@ -2,13 +2,13 @@
 /**
  * Example_Package class file
  *
- * @package example-package
+ * @package create-php-package
  */
 
-namespace EXAMPLE PACKAGE;
+namespace Create_PHP_Package;
 
 /**
- * Example Plugin
+ * Example Package
  */
 class Example_Package {
 
