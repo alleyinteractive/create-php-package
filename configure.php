@@ -93,7 +93,7 @@ function determine_separator( string $path ): string {
 }
 
 function list_all_files_for_replacement(): array {
-	return explode( PHP_EOL, run( 'grep -R -l ./  --exclude LICENSE --exclude configure.php --exclude-dir .git --exclude-dir .github --exclude-dir vendor --exclude-dir bin --exclude-dir webpack --exclude-dir modules' ) );
+	return explode( PHP_EOL, run( 'grep -R -l ./  --exclude LICENSE --exclude configure.php --exclude composer.lock --exclude-dir .git --exclude-dir .github --exclude-dir vendor --exclude-dir bin --exclude-dir webpack --exclude-dir modules --exclude-dir .phpcs' ) );
 }
 
 function delete_files( string|array $paths ) {
@@ -202,7 +202,7 @@ if ( confirm( 'Do you want to run `composer install`?', true ) ) {
 }
 
 if (
-	$standalone && file_exists( __DIR__ . '/buddy.yml' ) && confirm( 'Do you need the Buddy CI configuration? (Alley devs only -- if the plugin is open-source it will not be needed)', false )
+	file_exists( __DIR__ . '/buddy.yml' ) && confirm( 'Do you need the Buddy CI configuration? (Alley devs only -- if the plugin is open-source it will not be needed)', false )
 ) {
 	delete_files( [ '.buddy', 'buddy.yml' ] );
 }
