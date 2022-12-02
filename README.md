@@ -14,7 +14,7 @@ Follow these steps to get started:
    with the contents of this skeleton.
 2. Run `make` (or `php ./configure.php`) to run a script that will replace all
    placeholders throughout all the files.
-3. Have fun creating your plugin! 🎊
+3. Have fun creating your package! 🎊
 
 <!--/delete-->
 
@@ -35,11 +35,11 @@ composer require alleyinteractive/create-php-package
 
 ## Usage
 
-Activate the plugin in WordPress and use it like so:
+Use this package like so:
 
 ```php
-$plugin = Create_PHP_Package\Skeleton\Example_Plugin();
-$plugin->perform_magic();
+$package = Create_PHP_Package\Skeleton\Example_Package();
+$package->perform_magic();
 ```
 
 ## Changelog

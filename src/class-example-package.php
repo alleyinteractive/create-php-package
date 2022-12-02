@@ -1,6 +1,6 @@
 <?php
 /**
- * Example_Plugin class file
+ * Example_Package class file
  *
  * @package create-php-package
  */
@@ -8,8 +8,8 @@
 namespace Create_PHP_Package;
 
 /**
- * Example Plugin
+ * Example Package
  */
-class Example_Plugin {
+class Example_Package {
 
 }

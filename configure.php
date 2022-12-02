@@ -93,7 +93,7 @@ function determine_separator( string $path ): string {
 }
 
 function list_all_files_for_replacement(): array {
-	return explode( PHP_EOL, run( 'grep -R -l ./  --exclude={LICENSE,configure.php} --exclude-dir={.git,.github,vendor,bin,webpack,node_modules}' ) );
+	return explode( PHP_EOL, run( 'grep -R -l ./  --exclude LICENSE --exclude configure.php --exclude composer.lock --exclude-dir .git --exclude-dir .github --exclude-dir vendor --exclude-dir bin --exclude-dir webpack --exclude-dir modules --exclude-dir .phpcs' ) );
 }
 
 function delete_files( string|array $paths ) {
@@ -112,7 +112,7 @@ function delete_files( string|array $paths ) {
 	}
 }
 
-echo "\nWelcome friend to alleyinteractive/create-php-package! 😀\nLet's setup your PHP Plugin 🚀\n\n";
+echo "\nWelcome friend to alleyinteractive/create-php-package! 😀\nLet's setup your PHP package 🚀\n\n";
 
 $git_name    = run( 'git config user.name' );
 $author_name = ask( 'Author name?', $git_name );
@@ -131,18 +131,18 @@ $vendor_slug      = slugify( $vendor_name );
 $current_dir = getcwd();
 $folder_name = ensure_capitalp( basename( $current_dir ) );
 
-$plugin_name      = ask( 'Plugin name?', str_replace( '_', ' ', title_case( $folder_name ) ) );
-$plugin_name_slug = slugify( $plugin_name );
+$package_name      = ask( 'Package name?', str_replace( '_', ' ', title_case( $folder_name ) ) );
+$package_name_slug = slugify( $package_name );
 
-$namespace  = ask( 'Plugin namespace?', title_case( $plugin_name ) );
-$class_name = ask( 'Base class name for plugin?', title_case( $plugin_name ) );
+$namespace  = ask( 'Package namespace?', title_case( $package_name ) );
+$class_name = ask( 'Base class name for package?', title_case( $package_name ) );
 
-$description = ask( 'Plugin description?', "This is my plugin {$plugin_name}" );
+$description = ask( 'Package description?', "This is my PHP package {$package_name}" );
 
 writeln( '------' );
 writeln( "Author      : {$author_name} ({$author_email})" );
 writeln( "Vendor      : {$vendor_name} ({$vendor_slug})" );
-writeln( "Plugin      : {$plugin_name} <{$plugin_name_slug}>" );
+writeln( "Package     : {$package_name} <{$package_name_slug}>" );
 writeln( "Description : {$description}" );
 writeln( "Namespace   : {$namespace}" );
 writeln( "Main Class  : {$class_name}" );
@@ -161,16 +161,14 @@ $search_and_replace = [
 
 	'A skeleton PHP package geared for WordPress Development' => $description,
 
-	'Create_PHP_Package'      => $namespace,
-	'Example_Plugin'          => $class_name,
+	'Create_PHP_Package'       => $namespace,
+	'Example_Package'          => $class_name,
+	'package_name'             => $package_name,
 
-	'Create_PHP_Package' => str_replace( '-', '_', $plugin_name ),
-	'plugin_name'             => $plugin_name,
+	'create-php-package'      => $package_name_slug,
+	'Create PHP Package'      => $package_name,
 
-	'create-php-package' => $plugin_name_slug,
-	'Create PHP Package' => $plugin_name,
-
-	'Create_PHP_Package' => strtoupper( str_replace( '-', '_', $plugin_name ) ),
+	'CREATE_PHP_PACKAGE'      => strtoupper( str_replace( '-', '_', $package_name ) ),
 	'Skeleton'                => $class_name,
 	'vendor_name'             => $vendor_name,
 	'alleyinteractive'        => $vendor_slug,
@@ -180,7 +178,7 @@ foreach ( list_all_files_for_replacement() as $path ) {
 	echo "Updating $path...\n";
 	replace_in_file( $path, $search_and_replace );
 
-	if ( str_contains( $path, determine_separator( 'src/class-example-plugin.php' ) ) ) {
+	if ( str_contains( $path, determine_separator( 'src/class-example-package.php' ) ) ) {
 		rename( $path, determine_separator( './src/class-' . str_replace( '_', '-', strtolower( $class_name ) ) . '.php' ) );
 	}
 
@@ -202,7 +200,7 @@ if ( confirm( 'Do you want to run `composer install`?', true ) ) {
 }
 
 if (
-	$standalone && file_exists( __DIR__ . '/buddy.yml' ) && confirm( 'Do you need the Buddy CI configuration? (Alley devs only -- if the plugin is open-source it will not be needed)', false )
+	file_exists( __DIR__ . '/buddy.yml' ) && confirm( 'Do you need the Buddy CI configuration? (Alley devs only -- if the package is open-source it will not be needed)', false )
 ) {
 	delete_files( [ '.buddy', 'buddy.yml' ] );
 }
