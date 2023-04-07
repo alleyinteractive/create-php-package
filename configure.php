@@ -41,7 +41,7 @@ function writeln( string $line ): void {
 function run( string $command, string $dir = null ): string {
 	$command = $dir ? "cd {$dir} && {$command}" : $command;
 
-	return trim( shell_exec( $command ) );
+	return trim( (string) shell_exec( $command ) );
 }
 
 function str_after( string $subject, string $search ): string {
@@ -55,7 +55,7 @@ function str_after( string $subject, string $search ): string {
 }
 
 function slugify( string $subject ): string {
-	return strtolower( trim( preg_replace( '/[^A-Za-z0-9-]+/', '-', $subject ), '-' ) );
+	return strtolower( trim( (string) preg_replace( '/[^A-Za-z0-9-]+/', '-', $subject ), '-' ) );
 }
 
 function title_case( string $subject ): string {
@@ -66,21 +66,33 @@ function ensure_capitalp( string $text ): string {
 	return str_replace( 'Wordpress', 'WordPress', $text );
 }
 
+/**
+ * @param string $file
+ * @param array<string, string> $replacements
+ */
 function replace_in_file( string $file, array $replacements ): void {
 	$contents = file_get_contents( $file );
+
+	if ( empty( $contents ) ) {
+		return;
+	}
 
 	file_put_contents(
 		$file,
 		str_replace(
 			array_keys( $replacements ),
 			array_values( $replacements ),
-			$contents
+			$contents,
 		)
 	);
 }
 
 function remove_readme_paragraphs( string $file ): void {
 	$contents = file_get_contents( $file );
+
+	if ( empty( $contents ) ) {
+		return;
+	}
 
 	file_put_contents(
 		$file,
@@ -92,11 +104,17 @@ function determine_separator( string $path ): string {
 	return str_replace( '/', DIRECTORY_SEPARATOR, $path );
 }
 
+/**
+ * @return array<int, string>
+ */
 function list_all_files_for_replacement(): array {
-	return explode( PHP_EOL, run( 'grep -R -l ./  --exclude LICENSE --exclude configure.php --exclude composer.lock --exclude-dir .git --exclude-dir .github --exclude-dir vendor --exclude-dir bin --exclude-dir webpack --exclude-dir modules --exclude-dir .phpcs' ) );
+	return explode( PHP_EOL, run( 'grep -R -l ./  --exclude LICENSE --exclude .phpunit.result.cache --exclude-dir node_modules --exclude configure.php --exclude composer.lock --exclude-dir .git --exclude-dir .github --exclude-dir vendor --exclude-dir bin --exclude-dir webpack --exclude-dir modules --exclude-dir .phpcs' ) );
 }
 
-function delete_files( string|array $paths ) {
+/**
+ * @param string|array<int, string> $paths
+ */
+function delete_files( string|array $paths ): void {
 	if ( ! is_array( $paths ) ) {
 		$paths = [ $paths ];
 	}
@@ -112,7 +130,18 @@ function delete_files( string|array $paths ) {
 	}
 }
 
+$current_dir = getcwd();
+
 echo "\nWelcome friend to alleyinteractive/create-php-package! 😀\nLet's setup your PHP package 🚀\n\n";
+
+if ( ! $current_dir ) {
+	die( 'Could not determine current directory.' );
+}
+
+$folder_name = ensure_capitalp( basename( $current_dir ) );
+
+$package_name      = ask( 'Package name?', str_replace( '_', ' ', title_case( $folder_name ) ) );
+$package_name_slug = slugify( $package_name );
 
 $git_name    = run( 'git config user.name' );
 $author_name = ask( 'Author name?', $git_name );
@@ -127,12 +156,6 @@ $author_username = ask( 'Author username?', $username_guess );
 
 $vendor_name      = ask( 'Vendor name (usually the Github Organization)?', $username_guess );
 $vendor_slug      = slugify( $vendor_name );
-
-$current_dir = getcwd();
-$folder_name = ensure_capitalp( basename( $current_dir ) );
-
-$package_name      = ask( 'Package name?', str_replace( '_', ' ', title_case( $folder_name ) ) );
-$package_name_slug = slugify( $package_name );
 
 $namespace  = ask( 'Package namespace?', title_case( $package_name ) );
 $class_name = ask( 'Base class name for package?', title_case( $package_name ) );
