@@ -11,8 +11,3 @@ indent_size = 2
 [*.{html,php}]
 indent_size = 4
 indent_style = tab
-
-# Composer File
-[composer.{json,lock}]
-indent_style = space
-indent_size = 4
