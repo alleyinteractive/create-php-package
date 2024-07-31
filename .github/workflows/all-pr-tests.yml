@@ -41,3 +41,4 @@ jobs:
           php-version: '${{ matrix.php }}'
           wordpress-version: '${{ matrix.wordpress }}'
           skip-wordpress-install: 'true'
+          skip-services: 'true' # Skip MySQL unless the library is not using SQLite testing.
