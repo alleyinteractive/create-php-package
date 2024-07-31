@@ -157,7 +157,13 @@ $author_username = ask( 'Author username?', $username_guess );
 $vendor_name      = ask( 'Vendor name (usually the Github Organization)?', $username_guess );
 $vendor_slug      = slugify( $vendor_name );
 
-$namespace  = ask( 'Package namespace?', title_case( $package_name ) );
+$is_wordpress_package = confirm( 'Is this a WordPress package?', false );
+
+$namespace  = ask(
+	'Package namespace?',
+	$is_wordpress_package ? 'Alley\\WP\\' . title_case( $package_name ) : 'Alley\\' . title_case( $package_name ),
+);
+
 $class_name = ask( 'Base class name for package?', title_case( $package_name ) );
 
 $description = ask( 'Package description?', "This is my PHP package {$package_name}" );
