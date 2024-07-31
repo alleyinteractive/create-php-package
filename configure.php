@@ -207,6 +207,21 @@ $search_and_replace = [
 	'alleyinteractive'        => $vendor_slug,
 ];
 
+// Patch the Composer.json namespace first before search and replace.
+run(
+	'composer config extra.wordpress-autoloader.autoload --json \'' . json_encode( [
+		$namespace => 'src',
+	] ) . '\'',
+);
+
+run(
+	'composer config autoload-dev --json \'' . json_encode( [
+		'psr-4' => [
+			$namespace . '\\Tests' => 'tests',
+		],
+	] ) . '\'',
+);
+
 foreach ( list_all_files_for_replacement() as $path ) {
 	echo "Updating $path...\n";
 	replace_in_file( $path, $search_and_replace );
