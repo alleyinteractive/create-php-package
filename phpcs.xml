@@ -38,7 +38,7 @@
     <properties>
       <property name="prefixes" type="array">
         <element value="vendor_name" />
-        <element value="Create_PHP_Package" />
+        <element value="Alley" />
       </property>
     </properties>
   </rule>
