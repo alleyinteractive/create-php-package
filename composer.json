@@ -31,13 +31,15 @@
         },
         "sort-packages": true
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Alley\\Create_PHP_Package\\Tests\\": "tests"
+        }
+    },
     "extra": {
         "wordpress-autoloader": {
             "autoload": {
-                "Create_PHP_Package\\": "src"
-            },
-            "autoload-dev": {
-                "Create_PHP_Package\\Tests\\": "tests"
+                "Alley\\Create_PHP_Package\\": "src"
             }
         }
     },

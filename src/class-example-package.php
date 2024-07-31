@@ -5,7 +5,7 @@
  * @package create-php-package
  */
 
-namespace Create_PHP_Package;
+namespace Alley\Create_PHP_Package;
 
 /**
  * Example Package
