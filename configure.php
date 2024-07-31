@@ -190,7 +190,11 @@ $search_and_replace = [
 
 	'A skeleton PHP package geared for WordPress Development' => $description,
 
-	'Create_PHP_Package'       => $namespace,
+	// Escape the namespace used in composer.json.
+	'"Alley\\Create_PHP_Package\\"'        => (string) json_encode( $namespace ),
+	'"Alley\\Create_PHP_Package\\Tests\\"' => (string) json_encode( $namespace . '\\Tests' ),
+	'Alley\\Create_PHP_Package'            => $namespace,
+
 	'Example_Package'          => $class_name,
 	'package_name'             => $package_name,
 
