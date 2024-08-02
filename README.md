@@ -20,8 +20,7 @@ Follow these steps to get started:
 
 # Create PHP Package
 
-[![Coding Standards](https://github.com/alleyinteractive/create-php-package/actions/workflows/coding-standards.yml/badge.svg)](https://github.com/alleyinteractive/create-php-package/actions/workflows/coding-standards.yml)
-[![Testing Suite](https://github.com/alleyinteractive/create-php-package/actions/workflows/unit-test.yml/badge.svg)](https://github.com/alleyinteractive/create-php-package/actions/workflows/unit-test.yml)
+[![Testing Suite](https://github.com/alleyinteractive/create-php-package/actions/workflows/all-pr-tests.yml/badge.svg)](https://github.com/alleyinteractive/create-php-package/actions/workflows/all-pr-tests.yml)
 
 A skeleton PHP package geared for WordPress Development
 
