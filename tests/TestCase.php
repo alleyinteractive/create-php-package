@@ -1,5 +1,13 @@
 <?php
-namespace Alley\Create_PHP_Package\Tests;
+/**
+ * TestCase class file
+ *
+ * @package create-php-package
+ */
+
+declare(strict_types=1);
+
+namespace Alley\CreatePhpPackage\Tests;
 
 use Mantle\Testkit\Test_Case as TestkitTest_Case;
 

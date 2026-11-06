@@ -1,15 +1,17 @@
 <?php
 /**
- * Example_Package class file
+ * ExamplePackage class file
  *
  * @package create-php-package
  */
 
-namespace Alley\Create_PHP_Package;
+declare(strict_types=1);
+
+namespace Alley\CreatePhpPackage;
 
 /**
  * Example Package
  */
-class Example_Package {
+class ExamplePackage {
 
 }

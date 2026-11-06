@@ -62,6 +62,10 @@ function title_case( string $subject ): string {
 	return ensure_capitalp( str_replace( ' ', '_', ucwords( str_replace( [ '-', '_' ], ' ', $subject ) ) ) );
 }
 
+function studly_case( string $subject ): string {
+	return str_replace( '_', '', title_case( $subject ) );
+}
+
 function ensure_capitalp( string $text ): string {
 	return str_replace( 'Wordpress', 'WordPress', $text );
 }
@@ -161,10 +165,10 @@ $is_wordpress_package = confirm( 'Is this a WordPress package?', false );
 
 $namespace  = ask(
 	'Package namespace?',
-	$is_wordpress_package ? 'Alley\\WP\\' . title_case( $package_name ) : 'Alley\\' . title_case( $package_name ),
+	$is_wordpress_package ? 'Alley\\WP\\' . studly_case( $package_name ) : 'Alley\\' . studly_case( $package_name ),
 );
 
-$class_name = ask( 'Base class name for package?', title_case( $package_name ) );
+$class_name = ask( 'Base class name for package?', studly_case( $package_name ) );
 
 $description = ask( 'Package description?', "This is my PHP package {$package_name}" );
 
@@ -191,10 +195,10 @@ $search_and_replace = [
 	'A skeleton PHP package geared for WordPress Development' => $description,
 
 	// Extra slashes are here for composer.json.
-	'Alley\\\Create_PHP_Package\\\\' => str_replace( '\\', '\\\\', $namespace ) . '\\\\',
-	'Alley\Create_PHP_Package'       => $namespace,
+	'Alley\\\CreatePhpPackage\\\\' => str_replace( '\\', '\\\\', $namespace ) . '\\\\',
+	'Alley\CreatePhpPackage'       => $namespace,
 
-	'Example_Package'          => $class_name,
+	'ExamplePackage'           => $class_name,
 	'package_name'             => $package_name,
 
 	'create-php-package'      => $package_name_slug,
@@ -210,8 +214,8 @@ foreach ( list_all_files_for_replacement() as $path ) {
 	echo "Updating $path...\n";
 	replace_in_file( $path, $search_and_replace );
 
-	if ( str_contains( $path, determine_separator( 'src/class-example-package.php' ) ) ) {
-		rename( $path, determine_separator( './src/class-' . str_replace( '_', '-', strtolower( $class_name ) ) . '.php' ) );
+	if ( str_contains( $path, determine_separator( 'src/ExamplePackage.php' ) ) ) {
+		rename( $path, determine_separator( './src/' . $class_name . '.php' ) );
 	}
 
 	if ( str_contains( $path, 'README.md' ) ) {

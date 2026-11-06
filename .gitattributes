@@ -6,9 +6,14 @@
 # Via WPCS.
 #
 /.github export-ignore
-/phpcs.xml export-ignore
+/.phpcs.xml export-ignore
+/.editorconfig export-ignore
+/.deployignore export-ignore
+/CLAUDE.md export-ignore
 /.phpcs export-ignore
 /phpunit.xml export-ignore
+/phpstan.neon export-ignore
+/rector.php export-ignore
 /tests export-ignore
 /configure.php export-ignore
 /Makefile export-ignore

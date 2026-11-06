@@ -1,13 +1,24 @@
 <?php
-namespace Alley\Create_PHP_Package\Tests\Feature;
+/**
+ * ExampleTest class file
+ *
+ * @package create-php-package
+ */
 
-use Alley\Create_PHP_Package\Tests\TestCase;
+declare(strict_types=1);
+
+namespace Alley\CreatePhpPackage\Tests\Feature;
+
+use Alley\CreatePhpPackage\Tests\TestCase;
 
 /**
  * Visit {@see https://mantle.alley.co/testing/test-framework.html} to learn more.
  */
 class ExampleTest extends TestCase {
-	public function test_example() {
+	/**
+	 * Example feature test.
+	 */
+	public function test_example(): void {
 		$this->assertTrue( true );
 		$this->assertNotEmpty( home_url() );
 	}

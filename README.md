@@ -37,8 +37,9 @@ composer require alleyinteractive/create-php-package
 Use this package like so:
 
 ```php
-$package = Create_PHP_Package\Skeleton\Example_Package();
-$package->perform_magic();
+use Alley\CreatePhpPackage\ExamplePackage;
+
+$package = new ExamplePackage();
 ```
 
 ## Changelog
