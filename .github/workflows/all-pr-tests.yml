@@ -46,7 +46,6 @@ jobs:
           php-version: '${{ matrix.php }}'
           wordpress-version: '${{ matrix.wordpress }}'
           skip-wordpress-install: 'true'
-          skip-services: 'true' # Skip MySQL unless the library is not using SQLite testing.
           # The default --no-dev audit exits 1 when a package has no runtime dependencies.
           audit-command: 'composer audit --locked --ansi --no-interaction'
   # This required job ensures that all PR checks have passed before merging.
